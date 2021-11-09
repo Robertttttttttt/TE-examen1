@@ -1,0 +1,59 @@
+--PROCEDIMIENTO DE MOSTRAR CLIENTE EN UNA GRILLA DATAGRID
+create procedure mostrar_cliente
+as
+select top 200 * from cliente
+order by idcliente asc
+go
+
+--PROCEDIMIENTO PARA INSERTAR REGISTROS EN MI TABLA CLIENTE
+create procedure insert_cliente
+@idcliente int output,
+@nombre varchar(50),
+@apellido varchar(80),
+@sexo varchar(1),
+@fecha_nacimiento date,
+@tipodocumento varchar(12),
+@documento varchar(50),
+@direccion varchar(100)
+as
+insert into cliente (nombre,apellidos,sexo,fecha_nacimiento,tipo_documento, documento,direccion)
+values (@nombre,@apellido,@sexo,@fecha_nacimiento,@tipodocumento,@documento,@direccion)
+go
+
+--PROCEDIMIENTO PARA EDITAR REGISTROS EN MI TABLA CLIENTE
+create proc editar_cliente
+@idcliente int,
+@nombre varchar(50),
+@apellido varchar(80),
+@sexo varchar(1),
+@fecha_nacimiento date,
+@tipodocumento varchar(12),
+@documento varchar(50),
+@direccion varchar(100)
+as
+update cliente set nombre=@nombre, apellidos=@apellido,sexo=@sexo,fecha_nacimiento=@fecha_nacimiento,tipo_documento=@tipodocumento,documento=@documento,direccion=@direccion
+where idcliente=@idcliente
+go
+
+--PROCEDIMIENTO PARA ELIMINAR REGISTROS EN MI TABLA CLIENTE
+create proc eliminar_cliente
+@idcliente int
+as
+delete cliente where idcliente=@idcliente
+go
+
+--PROCEDIMIENTO PARA BUSCAR CLIENTES POR NOMBRE DE MIS REGISTROS EN MI TABLA CLIENTE
+create proc buscar_cliente_nombre
+@textobuscar varchar(100)
+as
+select * from cliente
+where nombre like '%'+@textobuscar+'%'
+go
+
+--PROCEDIMIENTO PARA BUSCAR CLIENTES POR NOMBRE DE MIS REGISTROS EN MI TABLA CLIENTE
+create proc buscar_cliente_apellidos
+@textobuscar varchar(100)
+as
+select * from cliente
+where apellidos like '%'+@textobuscar+'%'
+go
